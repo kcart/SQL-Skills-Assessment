@@ -1,4 +1,4 @@
--- 1. Select all columns for all brands in the Brands table.
+sq-- 1. Select all columns for all brands in the Brands table.
     SELECT * FROM Brands;
 -- 2. Select all columns for all car models made by Pontiac in the Models table.
     SELECT * FROM Models WHERE brand_name = "Pontiac";
@@ -96,6 +96,9 @@ Inner JOIN only shows results that match both table. Left Join shows all overlap
 
 -- 1. Select the **name** of any brand with more than 5 models in the database.
 
+SELECT b.name, m.name FROM Models AS m JOIN Brands AS b ON m.brand_name = b.name GROUP BY b.name HAVING COUNT (*) > 5;
+
+
 -- 2. Add the following rows to the Models table.
 
 -- year    name       brand_name
@@ -103,9 +106,22 @@ Inner JOIN only shows results that match both table. Left Join shows all overlap
 -- 2015    Chevrolet  Malibu
 -- 2015    Subaru     Outback
 
+ INSERT INTO Models (year, brand_name, name)
+ VALUES (2015, 'Chevrolet', 'Malibu');
+
+ INSERT INTO Models (year, brand_name, name)
+ VALUES (2015, 'Subaru', 'Outback');
+
 -- 3. Write a SQL statement to crate a table called ``Awards`` 
 --    with columns ``name``, ``year``, and ``winner``. Choose 
 --    an appropriate datatype and nullability for each column.
+ 
+CREATE TABLE Awards(
+id INTEGER PRIMARY KEY,
+name VARCHAR(50) NOT NULL, 
+year INTEGER, 
+winner BOOLEAN NOT NULL DEFAULT 1
+);
 
 -- 4. Write a SQL statement that adds the following rows to the Awards table:
 
@@ -114,9 +130,12 @@ Inner JOIN only shows results that match both table. Left Join shows all overlap
 --   IIHS Safety Award    2015      # get the ``id`` of the 2015 Chevrolet Malibu
 --   IIHS Safety Award    2015      # get the ``id`` of the 2015 Subaru Outback
 
+
+
 -- 5. Using a subquery, select only the *name* of any model whose 
 -- year is the same year that *any* brand was founded.
-
+SELECT * FROM Models as m JOIN Brands AS b ON m.brand_name = b.name WHERE b.founded = m.year ;
+I KNOW SOMETHING IS OFF WITH THIS ONE; it does not return anything.
 
 
 
